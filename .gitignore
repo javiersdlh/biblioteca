@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#db
+/lib/biblioteca.duckdb
+
+#jsons
+/scripts/authors.json
+/scripts/books.json
+/scripts/list.json
+/scripts/series.json
