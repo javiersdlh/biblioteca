@@ -18,6 +18,8 @@
 
 - Mover el archivo biblioteca.duckdb a la carpeta lib.
 
+- Se pueden eliminar ahora los json porque ya no se usan y ocupan mucho espacio.
+
 - Ahora en la línea de comandos dentro del proyecto se ejecutan los siguientes comandos:
 
     * npm install
