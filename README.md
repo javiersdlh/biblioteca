@@ -9,7 +9,6 @@
 - Dentro de la carpeta scripts, se introducen los comandos por este orden:
 
     * python limpiar_libros.py
-    * python limpiar_libros_2.py
     * python load_books.py
     * python load_lists.py
     * python load_series.py
