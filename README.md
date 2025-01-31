@@ -2,6 +2,8 @@
 
 - Descargar e instalar python y node en el pc.
 
+- AVISO: Aunque ponga que ocupan 90gb los archivos descomprimidos del dataset, al final la base de datos acaba ocupando 1,5gb aproximadamente después de filtrar todo y obtener solo los libros en español.
+
 - Descargar los archivos en https://www.kaggle.com/datasets/opalskies/large-books-metadata-dataset-50-mill-entries/data
 
 - Descomprimirlos y poner los 4 json en la carpeta scripts.
