@@ -1,7 +1,8 @@
 'use client';
 
+//Importaciones
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Importa useRouter
+import { useRouter } from "next/navigation";
 import { Range } from "react-range";
 
 // Definir los tipos de datos
@@ -49,7 +50,6 @@ const Lists = () => {
   const [numLikes, setNumLikes] = useState<[number, number]>([0, 16830]);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
-
   const router = useRouter(); // Inicializa el router
 
   // Función para buscar con filtros
@@ -88,9 +88,6 @@ const Lists = () => {
     }
   };
 
-
-
-
   const loadMore = async () => {
     const newOffset = offset + 30;
     setOffset(newOffset);
@@ -128,22 +125,18 @@ const Lists = () => {
     }
   };
 
-
-
-  // Función para manejar el clic en una lista y redirigir a la página dinámica
+  // Función para manejar el clic en una lista y redirigir a la página
   const handleItemClick = (id: number) => {
-    router.push(`/lists/${id}`); // Redirige a la página dinámica de la lista
+    router.push(`/lists/${id}`); // Redirige a la página
   };
 
   return (
     <div className="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-8 mb-4">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-3xl font-semibold mb-8 text-center text-gray-800">Filtrar Listas de Libros</h1>
-
         {/* Controles de filtros */}
         <div className="bg-white p-8 rounded-lg shadow-xl mb-8">
           <h2 className="text-2xl font-semibold text-gray-700 mb-6">Filtros de Búsqueda</h2>
-
           {/* Filtro de votantes */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-600 mb-2">
@@ -169,11 +162,11 @@ const Lists = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract key from props
+                const { key, ...restProps } = props; // Extraer la key de props
                 return (
                   <div
-                    key={key} // Pass key directly
-                    {...restProps} // Spread the remaining props
+                    key={key}
+                    {...restProps}
                     style={{
                       ...restProps.style,
                       height: "16px",
@@ -186,7 +179,6 @@ const Lists = () => {
               }}
             />
           </div>
-
           {/* Filtro de libros */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-600 mb-2">
@@ -212,11 +204,11 @@ const Lists = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract key from props
+                const { key, ...restProps } = props; // Extraer key de props
                 return (
                   <div
-                    key={key} // Pass key directly
-                    {...restProps} // Spread the remaining props
+                    key={key} // Pasar la key
+                    {...restProps}
                     style={{
                       ...restProps.style,
                       height: "16px",
@@ -229,7 +221,6 @@ const Lists = () => {
               }}
             />
           </div>
-
           {/* Filtro de me gusta */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-600 mb-2">
@@ -255,11 +246,11 @@ const Lists = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract key from props
+                const { key, ...restProps } = props; // Extraer la key
                 return (
                   <div
-                    key={key} // Pass key directly
-                    {...restProps} // Spread the remaining props
+                    key={key} // Pasar la key
+                    {...restProps}
                     style={{
                       ...restProps.style,
                       height: "16px",
@@ -272,7 +263,6 @@ const Lists = () => {
               }}
             />
           </div>
-
           {/* Selector de ordenación */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-600 mb-2">
@@ -289,7 +279,6 @@ const Lists = () => {
               <option value="num_likes">Número de me gusta</option>
             </select>
           </div>
-
           {/* Selector de dirección */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-600 mb-2">
@@ -304,7 +293,6 @@ const Lists = () => {
               <option value="desc">Descendente</option>
             </select>
           </div>
-
           {/* Botón de buscar */}
           <button
             onClick={handleSearch}
@@ -338,11 +326,9 @@ const Lists = () => {
           </article>
         ))}
       </section>
-
       {loading && (
         <p className="text-center text-blue-600 mt-6">Cargando elementos...</p>
       )}
-
       {/* Botón para cargar más elementos */}
       {listItems.length > 0 && hasMore && !loading && (
         <div className="text-center mt-6">
@@ -354,8 +340,6 @@ const Lists = () => {
           </button>
         </div>
       )}
-
-
     </div>
   );
 };

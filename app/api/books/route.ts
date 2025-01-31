@@ -1,4 +1,3 @@
-// app/api/books/route.ts
 import { getConnection } from "../../../lib/duckdb";
 
 const bigIntReplacer = (key: string, value: unknown): unknown => {
@@ -71,7 +70,7 @@ export async function GET(request: Request) {
     orderClause = `ORDER BY num_pages ${order}`;
   }
 
-  // Consulta SQL optimizada con filtros y ordenación dinámica
+  // Consulta SQL
   let query = `
       WITH RankedBooks AS (
   SELECT work_id, title, author_name, average_rating, num_pages, image_url, ratings_count,

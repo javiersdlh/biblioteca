@@ -1,9 +1,12 @@
 "use client";
+
+//Imports
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// Definimos interfaces para cada tipo de dato
+
+// Definir interfaces
 interface Author {
   id: string;
   name: string;
@@ -49,8 +52,6 @@ interface RatingProps {
   onChange: (value: number) => void;
 }
 
-
-
 const DataList = () => {
   const [authors, setAuthors] = useState<Author[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
@@ -61,6 +62,7 @@ const DataList = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null); // Para controlar la categoría activa
   const [userRatings, setUserRatings] = useState<{ id: string; rating: number }[]>([]);
+
   const Rating: React.FC<RatingProps> = ({ value, onChange }) => {
     const [hoverValue, setHoverValue] = useState<number | null>(null);
     const starRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -105,7 +107,7 @@ const DataList = () => {
               ? (starValue <= Math.floor(hoverValue) ? 'gold' :
                 (starValue <= hoverValue ? 'gold' : 'gray'))
               : (starValue <= Math.floor(value) ? 'gold' : 'gray'),
-            fontSize: '2rem',  // Aumentar el tamaño de las estrellas
+            fontSize: '2rem',  // Tamaño de las estrellas
           }}
         >
           {hoverValue !== null && i + 1 <= hoverValue
@@ -188,7 +190,7 @@ const DataList = () => {
         autoClose: 3000,
       });
 
-      // Si la eliminación fue exitosa, recargamos los datos
+      // Si la eliminación es correcta, recarga los datos
       fetchData(type);
     } catch (err) {
       console.error("Error al eliminar el elemento:", err);
@@ -198,7 +200,6 @@ const DataList = () => {
       });
     }
   };
-
 
   const handleRatingChange = async (newRating: number, bookId: string, type: string) => {
     try {
@@ -291,9 +292,8 @@ const DataList = () => {
         <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-4 rounded-lg shadow-lg">
           📚 Datos de Autores, Libros, Listas y Series ✨
         </h1>
-
         {activeCategory === null ? (
-          // Mostrar botones al principio
+          // Mostrar botones
           <div className="text-center space-y-4">
             <button
               onClick={() => { setActiveCategory("authors"); fetchData("authors"); }}
@@ -340,11 +340,11 @@ const DataList = () => {
                 >
                   Volver a las opciones
                 </button>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mt-6 px-4">
+                <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mt-6 px-4">
                   {activeCategory === "authors" && authors.length > 0 ? (
                     authors.map((author) => (
                       <article key={author.id} className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-                        {/* Imagen del autor con tamaño fijo */}
+                        {/* Imagen del autor */}
                         <div className="w-[120px] h-[120px] mb-4 flex justify-center items-center">
                           <ImageWithFallback
                             src={author.image_url}
@@ -355,12 +355,10 @@ const DataList = () => {
                             className="rounded-full object-cover w-full h-full"
                           />
                         </div>
-
-                        {/* Información del autor alineada verticalmente */}
+                        {/* Información del autor */}
                         <div className="flex flex-col items-center justify-between w-full flex-grow">
                           {/* Nombre del autor */}
                           <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center w-full">{author.name}</h3>
-
                           {/* Calificación promedio y número de ratings */}
                           <div className="flex flex-col items-center justify-between w-full mb-2">
                             <div className="flex justify-center items-center text-yellow-500 mb-1">
@@ -384,7 +382,7 @@ const DataList = () => {
                       </article>
                     ))
                   ) : activeCategory === "books" && books.length > 0 ? (
-                    <>
+                    <article>
                       {
                         books.map((book, index) => {
                           const userRating = userRatings.find((rating) => rating.id === book.work_id)?.rating || 0;
@@ -394,7 +392,7 @@ const DataList = () => {
                               key={`${book.work_id}-${index}`}
                               className="p-4 bg-white shadow-lg rounded-2xl hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center"
                             >
-                              {/* Image */}
+                              {/* Imagen */}
                               <div className="w-[150px] h-[225px] mb-4">
                                 <Image
                                   src={book.image_url || "/default-image.png"}
@@ -404,10 +402,10 @@ const DataList = () => {
                                   className="rounded-lg object-cover w-full h-full"
                                 />
                               </div>
-                              {/* Title */}
+                              {/* Titulo */}
                               <h3
                                 className="text-lg font-semibold text-gray-800 text-center line-clamp-2 w-full h-[60px] mb-2 overflow-hidden"
-                                title={book.title} // Tooltip
+                                title={book.title}
                               >
                                 {book.title}
                               </h3>
@@ -438,7 +436,7 @@ const DataList = () => {
                           );
                         })
                       }
-                    </>
+                    </article>
                   ) : activeCategory === "lists" && lists.length > 0 ? (
                     lists.map((list) => (
                       <article
@@ -466,7 +464,7 @@ const DataList = () => {
                     ))
                   ) : activeCategory === "series" && series.length > 0 ? (
                     series.map((serie) => (
-                      <li
+                      <article
                         key={serie.id}
                         className="p-6 bg-white rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300"
                       >
@@ -477,15 +475,14 @@ const DataList = () => {
                         >
                           Eliminar
                         </button>
-                      </li>
+                      </article>
                     ))
                   ) : (
-                    <li className="text-center text-gray-500 p-4 rounded-lg bg-gray-100 shadow">
+                    <article className="text-center text-gray-500 p-4 rounded-lg bg-gray-100 shadow">
                       📭 No hay datos disponibles
-                    </li>
-
+                    </article>
                   )}
-                </ul>
+                </section>
               </>
             )}
           </>
@@ -493,7 +490,6 @@ const DataList = () => {
       </div>
     </div>
   );
-
 };
 
 interface ImageWithFallbackProps {

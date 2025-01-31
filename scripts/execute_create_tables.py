@@ -1,7 +1,7 @@
 import duckdb
 import os
 
-# Función para ejecutar el SQL desde un archivo en la base de datos
+# Función para ejecutar el SQL
 def execute_sql_from_file(file_path):
     # Conectar a la base de datos (si no existe, se crea)
     conn = duckdb.connect('./biblioteca.duckdb')

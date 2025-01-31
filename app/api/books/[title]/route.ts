@@ -36,8 +36,8 @@ export async function GET(request: Request) {
 
     // Construir la parte de la consulta para cada palabra usando LIKE con OR
     const conditions = searchWords
-        .map(word => `LOWER(title) LIKE '%${word}%'`) // Usamos LIKE para cada palabra
-        .join(' AND '); // Usamos OR para que cualquier palabra coincida
+        .map(word => `LOWER(title) LIKE '%${word}%'`)
+        .join(' AND ');
 
     // Consulta SQL con ROW_NUMBER() para obtener solo un libro por work_id
     const query = `

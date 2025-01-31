@@ -1,11 +1,10 @@
-import { getConnection } from "../../../lib/duckdb"; // Asegúrate de que la ruta es correcta
+import { getConnection } from "../../../lib/duckdb";
 
-// Custom replacer function to handle BigInt serialization
 const bigIntReplacer = (key: string, value: unknown): unknown => {
   if (typeof value === "bigint") {
-    return value.toString(); // Convert BigInt to string
+    return value.toString();
   }
-  return value; // Return other values as is
+  return value;
 };
 
 export async function GET(req: Request) {
@@ -52,7 +51,7 @@ export async function GET(req: Request) {
     });
   }
 
-  // Validar columnas de ordenación para evitar inyección SQL
+  // Validar columnas de ordenación
   const validSortColumns = ["name", "fans_count", "ratings_count", "average_rating"];
   if (!validSortColumns.includes(sortBy)) {
     return new Response(JSON.stringify({ error: "Columna de ordenación inválida" }), {
@@ -70,7 +69,6 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Construir la consulta con parámetros embebidos
     const query = `
       SELECT * FROM authors
       WHERE ratings_count BETWEEN ${minRatingCount} AND ${maxRatingCount}
@@ -81,7 +79,6 @@ export async function GET(req: Request) {
 
     console.log("Consulta SQL:", query);
 
-    // Ejecutar la consulta directamente
     const result = await new Promise<unknown>((resolve, reject) => {
       conn.all(query, (err, rows) => {
         if (err) {

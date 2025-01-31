@@ -1,22 +1,21 @@
-import { getConnection } from "../../../lib/duckdb"; // Asegúrate de que la ruta es correcta
+import { getConnection } from "../../../lib/duckdb";
 
-// Custom replacer function to handle BigInt serialization
 const bigIntReplacer = (key: string, value: unknown): unknown => {
   if (typeof value === "bigint") {
-    return value.toString(); // Convert BigInt to string
+    return value.toString();
   }
-  return value; // Return other values as is
+  return value;
 };
 
 export async function GET(req: Request) {
-  const conn = getConnection(); // Obtener la conexión a DuckDB
+  const conn = getConnection();
   console.log("Conexión establecida:", conn);
 
   // Obtener los parámetros de la URL
   const url = new URL(req.url);
   const search = url.searchParams.get("search") || "";
 
-  // Validación básica del parámetro 'search'
+  // Validación del parámetro search
   if (!search.trim()) {
     return new Response(
       JSON.stringify({ error: "El parámetro de búsqueda es obligatorio" }),
@@ -28,7 +27,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Ejecutar la consulta para buscar series por título
+    // Ejecutar la consulta
     const result = await new Promise<unknown>((resolve, reject) => {
       const query = `
         SELECT 
@@ -46,7 +45,6 @@ export async function GET(req: Request) {
         if (err) {
           reject(err);
         } else {
-          // Asegurarse de que los datos sean válidos JSON
           const parsedRows = rows.map((row) => ({
             ...row,
             works: JSON.parse(row.works || '[]'), // Parsear works como JSON
@@ -58,7 +56,7 @@ export async function GET(req: Request) {
 
     console.log("Datos obtenidos:", result);
 
-    // Retornar los resultados como JSON
+    // Devolver los resultados como JSON
     return new Response(JSON.stringify(result, bigIntReplacer), {
       status: 200,
       headers: { "Content-Type": "application/json" },

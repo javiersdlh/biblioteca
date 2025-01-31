@@ -65,7 +65,7 @@ const Rating: React.FC<RatingProps> = ({ value, onChange }) => {
             ? (starValue <= Math.floor(hoverValue) ? 'gold' :
               (starValue <= hoverValue ? 'gold' : 'gray'))
             : (starValue <= Math.floor(value) ? 'gold' : 'gray'),
-          fontSize: '2rem',  // Aumentar el tamaño de las estrellas
+          fontSize: '2rem',  // Tamaño de las estrellas
         }}
       >
         {hoverValue !== null && i + 1 <= hoverValue
@@ -242,7 +242,6 @@ const BooksList = () => {
       setBooks([selectedBook]);
     }
   }, [selectedBook]);
-  const [toastShown, setToastShown] = useState(false);
 
   const handleRatingChange = async (newRating: number, bookId: string, type: string) => {
     try {
@@ -428,7 +427,6 @@ const BooksList = () => {
             </select>
           </div>
 
-
           <button
             onClick={handleSearch}
             className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
@@ -464,7 +462,7 @@ const BooksList = () => {
                   {/* Title */}
                   <h3
                     className="text-lg font-semibold text-gray-800 text-center line-clamp-2 w-full h-[60px] mb-2 overflow-hidden"
-                    title={book.title} // Tooltip
+                    title={book.title}
                   >
                     {book.title}
                   </h3>
@@ -489,7 +487,6 @@ const BooksList = () => {
               );
             })}
           </div>
-
 
           {hasMore && !loading && !selectedBook && (
             <button
