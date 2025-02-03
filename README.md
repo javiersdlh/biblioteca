@@ -1,10 +1,17 @@
 ## Pasos para usar la app
 
-- Descargar e instalar python y node en el pc.
+- Descargar e instalar python y node en el pc, estas son las URLs:
+    
+    * https://www.python.org/
+    * https://nodejs.org/en
 
-- AVISO: Aunque ponga que ocupan 90gb los archivos descomprimidos del dataset, al final la base de datos acaba ocupando 1,5gb aproximadamente después de filtrar todo y obtener solo los libros en español.
+- Ahora en la línea de comandos dentro del proyecto se ejecuta el siguiente comando:
+
+    * npm install
 
 - Descargar los archivos en https://www.kaggle.com/datasets/opalskies/large-books-metadata-dataset-50-mill-entries/data
+
+- AVISO: Aunque ponga que ocupan 90gb los archivos descomprimidos del dataset, al final la base de datos acaba ocupando 1,5gb aproximadamente después de filtrar todo y obtener solo los libros en español.
 
 - Descomprimirlos y poner los 4 json en la carpeta scripts.
 
@@ -20,9 +27,5 @@
 - Mover el archivo biblioteca.duckdb a la carpeta lib.
 
 - Se pueden eliminar ahora los json porque ya no se usan y ocupan mucho espacio.
-
-- Ahora en la línea de comandos dentro del proyecto se ejecutan los siguientes comandos:
-
-    * npm install
 
 - Ahora se puede ejecutar en la línea de comandos dentro del proyecto: npm run dev y aparecerá la url para usar la app.
