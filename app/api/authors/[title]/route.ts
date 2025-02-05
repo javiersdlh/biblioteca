@@ -7,7 +7,7 @@ const bigIntReplacer = (key: string, value: unknown): unknown => {
     return value;
 };
 
-// GET para buscar un autor específico por título o autor
+// GET para buscar un autor
 export async function GET(request: Request) {
     let conn;
     try {
@@ -34,12 +34,12 @@ export async function GET(request: Request) {
     // Convierte el término de búsqueda a minúsculas y divide en palabras
     const searchWords = searchTerm.trim().toLowerCase().split(/\s+/);
 
-    // Construir la parte de la consulta para cada palabra usando LIKE con OR
+    // Construir la parte de la consulta para cada palabra
     const conditions = searchWords
         .map(word => `LOWER(name) LIKE '%${word}%'`)
         .join(' AND ');
 
-    // Consulta SQL con ROW_NUMBER() para obtener solo un autor por work_id
+    // Consulta SQL para obtener solo un autor
     const query = `
     SELECT *
     FROM authors

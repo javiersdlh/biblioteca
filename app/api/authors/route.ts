@@ -1,8 +1,9 @@
 import { getConnection } from "../../../lib/duckdb";
 
+// BigInt serialization
 const bigIntReplacer = (key: string, value: unknown): unknown => {
   if (typeof value === "bigint") {
-    return value.toString();
+    return value.toString(); // Convertir BigInt a string
   }
   return value;
 };
@@ -69,6 +70,7 @@ export async function GET(req: Request) {
   }
 
   try {
+    // Construir la consulta
     const query = `
       SELECT * FROM authors
       WHERE ratings_count BETWEEN ${minRatingCount} AND ${maxRatingCount}
@@ -79,6 +81,7 @@ export async function GET(req: Request) {
 
     console.log("Consulta SQL:", query);
 
+    // Ejecutar la consulta
     const result = await new Promise<unknown>((resolve, reject) => {
       conn.all(query, (err, rows) => {
         if (err) {

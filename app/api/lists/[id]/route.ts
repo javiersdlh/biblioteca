@@ -1,13 +1,14 @@
-import { getConnection } from "../../../../lib/duckdb";
+import { getConnection } from "../../../../lib/duckdb"; // Ajusta la ruta si es necesario
 
+// Custom replacer function to handle BigInt serialization
 const bigIntReplacer = (key: string, value: unknown): unknown => {
   if (typeof value === "bigint") {
-    return value.toString();
+    return value.toString(); // Convert BigInt to string
   }
-  return value;
+  return value; // Return other values as is
 };
 
-// Estructura de la respuesta esperada de la consulta
+// Definir la estructura de la respuesta esperada de la consulta
 interface ListDetails {
   id: number;
   title: string;
@@ -19,17 +20,17 @@ interface ListDetails {
   created_date: string;
   tags: string[];
   num_likes: number;
-  created_by: { name: string; id: string };
+  created_by: { name: string; id: string }; // Ajustado para coincidir con la estructura
   num_comments: number;
-  books: any[];
+  books: any[]; // Ajusta según la estructura real
 }
 
 export async function GET(
   req: Request,
   context: { params: { id: string } }
 ) {
-  // Acceder a params.id de forma asíncrona
-  const { id } = await context.params;
+  // Acceder a `params.id` de forma asíncrona
+  const { id } = await context.params; // Aquí se debe usar `await`
 
   if (!id) {
     return new Response(JSON.stringify({ error: "ID no proporcionado" }), {
@@ -53,7 +54,7 @@ export async function GET(
   console.log("ID recibido:", id);
 
   try {
-    // Consulta SQL
+    // Consulta SQL para obtener los detalles de la lista por ID
     const query = `
       SELECT
         id,
@@ -90,10 +91,13 @@ export async function GET(
             num_books: row.num_books,
             num_voters: row.num_voters,
             created_date: row.created_date,
+            // Asegúrate de que `tags` sea un array de cadenas
             tags: Array.isArray(row.tags) ? row.tags : [],
             num_likes: row.num_likes,
+            // Asegúrate de que `created_by` sea un objeto con name e id
             created_by: row.created_by && typeof row.created_by === 'object' ? row.created_by : { name: "", id: "" },
             num_comments: row.num_comments,
+            // Asegúrate de que `books` sea un array
             books: Array.isArray(row.books) ? row.books : [],
           }));
 

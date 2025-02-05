@@ -1,8 +1,8 @@
 CREATE TABLE guardados (
-    "type" VARCHAR(50),  -- Tipo de favorito: 'book', 'author', 'series', 'list'
+    "type" VARCHAR(50),  -- Tipo de favorito
     id VARCHAR(50),  -- ID del favorito
     puntuacion DOUBLE,  -- Puntuación
-    CONSTRAINT unique_favorite UNIQUE ("type", id)  -- Asegura que no haya duplicados para el mismo tipo de favorito
+    CONSTRAINT unique_favorite UNIQUE ("type", id)
 );
 
 /*

@@ -7,7 +7,7 @@ const bigIntReplacer = (key: string, value: unknown): unknown => {
     return value;
 };
 
-// GET para buscar un libro específico por título o autor
+// GET para buscar un libro específico
 export async function GET(request: Request) {
     let conn;
     try {
@@ -34,12 +34,12 @@ export async function GET(request: Request) {
     // Convierte el término de búsqueda a minúsculas y divide en palabras
     const searchWords = searchTerm.trim().toLowerCase().split(/\s+/);
 
-    // Construir la parte de la consulta para cada palabra usando LIKE con OR
+    // Condicion de la consulta
     const conditions = searchWords
         .map(word => `LOWER(title) LIKE '%${word}%'`)
         .join(' AND ');
 
-    // Consulta SQL con ROW_NUMBER() para obtener solo un libro por work_id
+    // Consulta SQL
     const query = `
     WITH RankedBooks AS (
         SELECT work_id, title, author_name, average_rating, num_pages, image_url, ratings_count,

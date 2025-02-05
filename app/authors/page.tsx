@@ -28,7 +28,6 @@ const AuthorsList = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null);
-  const [userRatings, setUserRatings] = useState<{ id: string; rating: number }[]>([]);
 
   const [ratingCountRange, setRatingCountRange] = useState<number[]>([
     MIN_RATING_COUNT,
@@ -104,7 +103,7 @@ const AuthorsList = () => {
     const query = event.target.value;
     setSearchQuery(query);
 
-    if (query.length > 2) {
+    if (query.length > 0.5) {
       try {
         const response = await fetch(`/api/authors/${query}`);
         const data = await response.json();
@@ -117,7 +116,7 @@ const AuthorsList = () => {
     }
   };
 
-
+  const [userRatings, setUserRatings] = useState<{ id: string; rating: number }[]>([]);
 
   useEffect(() => {
     const fetchUserRatings = async () => {
@@ -163,7 +162,7 @@ const AuthorsList = () => {
         console.log('Autor existente:', existingAuthor);
 
         if (existingAuthor) {
-          // Si el autor ya está en la lista, mostrar un mensaje
+          // Si el autor ya está en la lista, mostrar un mensaje de éxito
           toast.info('Este autor ya está guardado', {
             position: 'top-right',
             autoClose: 3000,
@@ -171,7 +170,7 @@ const AuthorsList = () => {
         } else {
           // Si el autor no está en la lista, insertar el nuevo autor
           const payload = {
-            favorite_id: authorId,
+            favorite_id: authorId,  // Asegúrate de que este campo sea correcto en tu API
             type,
           };
 
@@ -205,6 +204,11 @@ const AuthorsList = () => {
       });
     }
   };
+
+
+
+
+
 
   return (
     <div className="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-8 mb-4">
@@ -251,11 +255,11 @@ const AuthorsList = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extraer la key de props
+                const { key, ...restProps } = props; // Extract the `key` from props
                 return (
                   <div
-                    key={key} // Pasa la key
-                    {...restProps}
+                    key={key} // Pass the `key` directly
+                    {...restProps} // Spread the rest of the props
                     className={`h-6 w-6 bg-blue-500 rounded-full`}
                   />
                 );
@@ -281,11 +285,11 @@ const AuthorsList = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extraer la key de props
+                const { key, ...restProps } = props; // Extract the `key` from props
                 return (
                   <div
-                    key={key} // Pasa la key
-                    {...restProps}
+                    key={key} // Pass the `key` directly
+                    {...restProps} // Spread the rest of the props
                     className={`h-6 w-6 bg-blue-500 rounded-full`}
                   />
                 );
@@ -339,7 +343,7 @@ const AuthorsList = () => {
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {authors.map((author) => (
               <article key={author.id} className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-                {/* Imagen del autor */}
+                {/* Imagen del autor con tamaño fijo */}
                 <div className="w-[120px] h-[120px] mb-4 flex justify-center items-center">
                   <ImageWithFallback
                     src={author.image_url}
@@ -351,7 +355,7 @@ const AuthorsList = () => {
                   />
                 </div>
 
-                {/* Información del autor */}
+                {/* Información del autor alineada verticalmente */}
                 <div className="flex flex-col items-center justify-between w-full flex-grow">
                   {/* Nombre del autor */}
                   <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center w-full">{author.name}</h3>

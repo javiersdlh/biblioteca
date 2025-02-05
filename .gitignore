@@ -42,9 +42,13 @@ next-env.d.ts
 
 #db
 /lib/biblioteca.duckdb
+/lib/biblioteca.duckdb.wal
 
 #jsons
 /scripts/authors.json
 /scripts/books.json
 /scripts/list.json
 /scripts/series.json
+
+#paquetes_a_instalar
+paquetes_a_instalar.txt

@@ -1,10 +1,11 @@
-import { getConnection } from "../../../lib/duckdb";
+import { getConnection } from "../../../lib/duckdb"; // Asegúrate de que la ruta es correcta
 
+// Custom replacer function to handle BigInt serialization
 const bigIntReplacer = (key: string, value: unknown): unknown => {
   if (typeof value === "bigint") {
-    return value.toString();
+    return value.toString(); // Convert BigInt to string
   }
-  return value;
+  return value; // Return other values as is
 };
 
 export async function GET(req: Request) {
@@ -28,7 +29,7 @@ export async function GET(req: Request) {
   const maxBooks = parseInt(url.searchParams.get("maxBooks") || "10000", 10);
   const minLikes = parseInt(url.searchParams.get("minLikes") || "0", 10);
   const maxLikes = parseInt(url.searchParams.get("maxLikes") || "10000", 10);
-  const sortBy = url.searchParams.get("sortBy") || "title";
+  const sortBy = url.searchParams.get("sortBy") || "title"; // Ordenar por defecto por "name"
   const sortOrder = url.searchParams.get("sortOrder") || "asc"; // Orden ascendente por defecto
 
   console.log({
@@ -58,7 +59,7 @@ export async function GET(req: Request) {
     });
   }
 
-  // Validar columnas de ordenación
+  // Validar columnas de ordenación para evitar inyección SQL
   const validSortColumns = ["title", "num_voters", "num_books", "num_likes"];
   if (!validSortColumns.includes(sortBy)) {
     return new Response(JSON.stringify({ error: "Columna de ordenación inválida" }), {
@@ -76,7 +77,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Consulta
+    // Construir la consulta con parámetros embebidos
     const query = `
       SELECT * FROM list
       WHERE num_voters BETWEEN ${minVoters} AND ${maxVoters}
@@ -88,7 +89,7 @@ export async function GET(req: Request) {
 
     console.log("Consulta SQL:", query);
 
-    // Ejecutar la consulta
+    // Ejecutar la consulta directamente
     const result = await new Promise<unknown>((resolve, reject) => {
       conn.all(query, (err, rows) => {
         if (err) {

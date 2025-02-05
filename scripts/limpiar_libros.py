@@ -24,7 +24,7 @@ with open(file_path, "r", encoding="utf-8") as infile, open(temp_file_path, "w",
             # Filtrar solo los libros en español
             if book.get("language") in ["es-MX", "spa"]:
                 # Escribir el libro válido en el archivo temporal
-                tempfile.write(line)
+                tempfile.write(line)  # Escribimos la línea tal como está, sin modificarla
                 valid_lines += 1
 
         except json.JSONDecodeError:

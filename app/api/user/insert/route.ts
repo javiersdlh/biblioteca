@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getConnection } from '../../../../lib/duckdb';
+import { getConnection } from '../../../../lib/duckdb'; // Asegúrate de que la ruta sea correcta
 
 export async function POST(req: Request) {
     try {
@@ -26,11 +26,11 @@ export async function POST(req: Request) {
         // Preparar la consulta
         const stmt = db.prepare(query);
 
-        // Ejecutar la consulta con los parámetros correctos
+        // Ejecutar la consulta con los parámetros correctos usando promesas
         await new Promise((resolve, reject) => {
             stmt.run(type, favorite_id, puntuacion, (err) => {
                 if (err) {
-                    console.error('Error al insertar en DuckDB:', err);
+                    console.error('Error al insertar en DuckDB:', err);  // Depuración del error
                     reject(new Error('Hubo un error al insertar el favorito'));
                 } else {
                     resolve('Favorito añadido exitosamente');
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
             });
         });
 
-        // Respuesta si la inserción fue exitosa
+        // Responder si la inserción fue exitosa
         return NextResponse.json({ message: 'Favorito añadido exitosamente' }, { status: 200 });
     } catch (error) {
         console.error('Error al procesar la solicitud:', error);

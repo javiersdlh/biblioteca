@@ -1,9 +1,9 @@
 'use client';
 
-// Importaciones
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // Importa useRouter
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,7 +39,7 @@ interface List {
 }
 
 const ListPage = () => {
-    const { id } = useParams(); // Obtener el ID
+    const { id } = useParams(); // Obtener el ID desde la URL
     const [List, setList] = useState<List | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -102,10 +102,10 @@ const ListPage = () => {
                         position: 'top-right',
                         autoClose: 3000,
                     });
-                    return; // Salir de la función
+                    return; // Salir de la función para evitar la inserción
                 }
 
-                // Si la lista no está guardada, se hace la inserción
+                // Si la lista no está guardada, proceder con la inserción
                 const insertResponse = await fetch('/api/user/insert', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -166,11 +166,14 @@ const ListPage = () => {
                 <p>{List.description}</p>
             </div>
 
+
+
             <div className="mb-6">
                 <p className="text-lg text-gray-700"><strong>Fecha de creación:</strong> {List.created_date}</p>
                 <p className="text-lg text-gray-700"><strong>Número de libros:</strong> {List.num_books}</p>
                 <p className="text-lg text-gray-700"><strong>Número de votantes:</strong> {List.num_voters}</p>
                 <p className="text-lg text-gray-700"><strong>Número de likes:</strong> {List.num_likes}</p>
+
                 <ToastContainer />
                 <button
                     onClick={() => handleAddToFavorites(List.id)}
@@ -192,17 +195,17 @@ const ListPage = () => {
             <div>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Libros</h2>
                 {List.books.length > 0 ? (
-                    <section className="space-y-4">
+                    <ul className="space-y-4">
                         {List.books.map((book, index) => (
-                            <article key={index} className="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <li key={index} className="p-4 bg-gray-100 rounded-lg shadow-sm">
                                 <h3 className="text-xl font-medium text-gray-800">{book.title}</h3>
                                 <p className="text-lg text-gray-600"><strong>Autor:</strong> {book.author}</p>
                                 <p className="text-lg text-gray-600"><strong>Ranking:</strong> {book.position.ranking}</p>
                                 <p className="text-lg text-gray-600"><strong>Puntaje:</strong> {book.position.score}</p>
                                 <p className="text-lg text-gray-600"><strong>Votos:</strong> {book.position.votes}</p>
-                            </article>
+                            </li>
                         ))}
-                    </section>
+                    </ul>
                 ) : (
                     <p className="text-center text-gray-600">No hay libros en esta lista.</p>
                 )}
