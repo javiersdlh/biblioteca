@@ -12,7 +12,7 @@ export async function GET() {
     const connFavorites = getConnection();
 
     try {
-        // Consulta para obtener todos los registros de la tabla 'guardados' sin filtro
+        // Consulta para obtener todos los registros de la tabla guardados
         const guardadosQuery = `
             SELECT * 
             FROM guardados;

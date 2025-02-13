@@ -49,10 +49,9 @@ const Lists = () => {
   const [numLikes, setNumLikes] = useState<[number, number]>([0, 16830]);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
-
   const router = useRouter(); // Inicializa el router
 
-  // Función para buscar con filtros
+  // Función para buscar
   const handleSearch = async () => {
     setLoading(true);
     setOffset(0);
@@ -87,9 +86,6 @@ const Lists = () => {
       setLoading(false);
     }
   };
-
-
-
 
   const loadMore = async () => {
     const newOffset = offset + 30;
@@ -128,11 +124,9 @@ const Lists = () => {
     }
   };
 
-
-
-  // Función para manejar el clic en una lista y redirigir a la página dinámica
+  // Función para manejar el clic en una lista y redirigir a la página
   const handleItemClick = (id: number) => {
-    router.push(`/lists/${id}`); // Redirige a la página dinámica de la lista
+    router.push(`/lists/${id}`); // Redirige a la página
   };
 
   return (
@@ -169,11 +163,11 @@ const Lists = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract key from props
+                const { key, ...restProps } = props; // Extraer key
                 return (
                   <div
-                    key={key} // Pass key directly
-                    {...restProps} // Spread the remaining props
+                    key={key} // Pasar key
+                    {...restProps}
                     style={{
                       ...restProps.style,
                       height: "16px",
@@ -212,11 +206,11 @@ const Lists = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract key from props
+                const { key, ...restProps } = props; // Extraer key
                 return (
                   <div
-                    key={key} // Pass key directly
-                    {...restProps} // Spread the remaining props
+                    key={key} // Pasar key
+                    {...restProps}
                     style={{
                       ...restProps.style,
                       height: "16px",
@@ -255,11 +249,11 @@ const Lists = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract key from props
+                const { key, ...restProps } = props; // Extraer key
                 return (
                   <div
-                    key={key} // Pass key directly
-                    {...restProps} // Spread the remaining props
+                    key={key} // Pasar key
+                    {...restProps}
                     style={{
                       ...restProps.style,
                       height: "16px",
@@ -354,8 +348,6 @@ const Lists = () => {
           </button>
         </div>
       )}
-
-
     </div>
   );
 };

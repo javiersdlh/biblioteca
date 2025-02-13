@@ -140,8 +140,6 @@ const AuthorsList = () => {
     fetchUserRatings();
   }, []);
 
-
-
   const handleAddToFavorites = async (authorId: string, type: string) => {
     try {
       const response = await fetch('/api/user/obtain/todos');
@@ -170,7 +168,7 @@ const AuthorsList = () => {
         } else {
           // Si el autor no está en la lista, insertar el nuevo autor
           const payload = {
-            favorite_id: authorId,  // Asegúrate de que este campo sea correcto en tu API
+            favorite_id: authorId,
             type,
           };
 
@@ -204,11 +202,6 @@ const AuthorsList = () => {
       });
     }
   };
-
-
-
-
-
 
   return (
     <div className="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-8 mb-4">
@@ -255,11 +248,11 @@ const AuthorsList = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract the `key` from props
+                const { key, ...restProps } = props; // Extraer key
                 return (
                   <div
-                    key={key} // Pass the `key` directly
-                    {...restProps} // Spread the rest of the props
+                    key={key} // Pasar key
+                    {...restProps}
                     className={`h-6 w-6 bg-blue-500 rounded-full`}
                   />
                 );
@@ -285,11 +278,11 @@ const AuthorsList = () => {
                 </div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extract the `key` from props
+                const { key, ...restProps } = props; // Extraer key
                 return (
                   <div
-                    key={key} // Pass the `key` directly
-                    {...restProps} // Spread the rest of the props
+                    key={key} // Pasar key
+                    {...restProps}
                     className={`h-6 w-6 bg-blue-500 rounded-full`}
                   />
                 );
@@ -343,7 +336,7 @@ const AuthorsList = () => {
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {authors.map((author) => (
               <article key={author.id} className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-                {/* Imagen del autor con tamaño fijo */}
+                {/* Imagen del autor */}
                 <div className="w-[120px] h-[120px] mb-4 flex justify-center items-center">
                   <ImageWithFallback
                     src={author.image_url}
@@ -355,7 +348,7 @@ const AuthorsList = () => {
                   />
                 </div>
 
-                {/* Información del autor alineada verticalmente */}
+                {/* Información del autor */}
                 <div className="flex flex-col items-center justify-between w-full flex-grow">
                   {/* Nombre del autor */}
                   <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center w-full">{author.name}</h3>

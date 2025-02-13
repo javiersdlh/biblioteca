@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,7 +17,7 @@ interface SeriesItem {
   title: string;
   description: string;
   series_works_count: string;
-  works: WorkItem[]; // Aseguramos que works sea un arreglo
+  works: WorkItem[];
 }
 
 const Series = () => {
@@ -58,7 +57,7 @@ const Series = () => {
   }, [searchQuery, fetchSeriesItems]);
 
   const handleSeriesClick = (series: SeriesItem) => {
-    // Asegurarse de que works sea un arreglo
+    // Asegurarse de que works sea un array
     const parsedWorks = Array.isArray(series.works)
       ? series.works
       : JSON.parse(series.works);
@@ -74,7 +73,7 @@ const Series = () => {
       }
       const data = await response.json();
 
-      // Verificar si la respuesta contiene un array de guardados
+      // Verificar si la respuesta contiene un array
       if (Array.isArray(data.guardados)) {
         // Filtrar las series guardadas
         const filteredSeries = data.guardados.filter((item: any) => item.type === 'series');
@@ -124,8 +123,6 @@ const Series = () => {
     }
   };
 
-
-
   return (
     <div className="mt-8 max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-2xl">
       {/* Barra de búsqueda */}
@@ -159,18 +156,18 @@ const Series = () => {
           </button>
           <h3 className="text-2xl font-semibold mt-8 mb-4 text-gray-800">Libros en la serie:</h3>
           {Array.isArray(selectedSeries.works) && selectedSeries.works.length > 0 ? (
-            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {selectedSeries.works.map((work) => (
-                <li
+                <article
                   key={work.work_id}
                   className="p-6 bg-white rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300"
                 >
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">{work.title}</h3>
                   <p className="text-gray-600">Posición en la serie: {work.user_position}</p>
                   <p className="text-gray-600">Cantidad de ediciones: {work.books_count}</p>
-                </li>
+                </article>
               ))}
-            </ul>
+            </section>
           ) : (
             <p className="text-center text-gray-500 mt-4">No se encontraron libros para esta serie.</p>
           )}
@@ -180,18 +177,18 @@ const Series = () => {
           {loading ? (
             <p className="text-center text-blue-600 text-xl font-semibold">Cargando sugerencias...</p>
           ) : seriesItems.length > 0 ? (
-            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {seriesItems.map((series) => (
-                <li
+                <article
                   key={series.id}
                   onClick={() => handleSeriesClick(series)}
                   className="p-6 bg-white rounded-lg shadow-lg border border-gray-200 hover:shadow-xl cursor-pointer transition duration-300"
                 >
                   <h2 className="text-2xl font-semibold text-gray-800 mb-3">{series.title}</h2>
                   <p className="text-gray-600">{series.description}</p>
-                </li>
+                </article>
               ))}
-            </ul>
+            </section>
           ) : searchQuery.trim() ? (
             <p className="text-center text-gray-500 mt-4">No se encontraron series.</p>
           ) : null}
@@ -199,7 +196,6 @@ const Series = () => {
       )}
     </div>
   );
-
 };
 
 export default Series;

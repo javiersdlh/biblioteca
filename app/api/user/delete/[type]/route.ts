@@ -28,22 +28,22 @@ export async function DELETE(req: NextRequest) {
             return NextResponse.json({ error: `Tipo de favorito desconocido: ${type}` }, { status: 400 });
         }
 
-        // Verificar que el id sea válido (en este caso, asumimos que es un número)
+        // Verificar que el id sea válido
         if (isNaN(Number(id))) {
             return NextResponse.json({ error: `El id proporcionado no es válido` }, { status: 400 });
         }
 
         // Conexión a la base de datos
-        const conn = getConnection(); // Usar `await` para obtener la conexión si es asincrónica
+        const conn = getConnection();
         if (!conn) {
             return NextResponse.json({ error: "Error de conexión a la base de datos" }, { status: 500 });
         }
 
-        // Consulta DELETE para eliminar el favorito
+        // Consulta DELETE para eliminar
         const deleteQuery = `DELETE FROM guardados WHERE id = ? AND type = ?;`;
         console.log(`Ejecutando DELETE con id: ${id}, type: ${entityType}`);
 
-        // Usar callback para ejecutar la consulta DELETE
+        // Ejecutar la consulta DELETE
         await new Promise((resolve, reject) => {
             conn.run(deleteQuery, String(id), entityType, (err) => {
                 if (err) {
@@ -80,7 +80,7 @@ export async function DELETE(req: NextRequest) {
         // Verificar si el registro fue eliminado
         if (count === 0) {
             console.log(`El registro con id: ${id} y type: ${entityType} fue eliminado correctamente.`);
-            // Si la eliminación fue exitosa, devolvemos una respuesta positiva
+            // Si la eliminación fue exitosa, se devuelve una respuesta positiva
             return NextResponse.json({ message: `Eliminado correctamente` }, { status: 200 });
         } else {
             console.error(`No se pudo eliminar el registro con id: ${id} y type: ${entityType}`);
@@ -89,7 +89,6 @@ export async function DELETE(req: NextRequest) {
 
     } catch (error) {
         console.error("Error al eliminar el favorito:", error);
-        // Agregar más detalles sobre el error para depuración
         return NextResponse.json({ error: `Error al eliminar el favorito: ${error}` }, { status: 500 });
     }
 }

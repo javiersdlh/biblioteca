@@ -1,5 +1,6 @@
 "use client";
-import Link from "next/link"; // Importa el componente Link de Next.js para la navegación
+
+import Link from "next/link";
 
 const HomePage = () => {
   return (

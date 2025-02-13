@@ -1,11 +1,10 @@
-import { getConnection } from "../../../lib/duckdb"; // Asegúrate de que la ruta es correcta
+import { getConnection } from "../../../lib/duckdb";
 
-// Custom replacer function to handle BigInt serialization
 const bigIntReplacer = (key: string, value: unknown): unknown => {
   if (typeof value === "bigint") {
-    return value.toString(); // Convert BigInt to string
+    return value.toString(); // Convertir BigInt a string
   }
-  return value; // Return other values as is
+  return value;
 };
 
 export async function GET(req: Request) {
@@ -16,7 +15,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const search = url.searchParams.get("search") || "";
 
-  // Validación básica del parámetro 'search'
+  // Validación del parámetro search
   if (!search.trim()) {
     return new Response(
       JSON.stringify({ error: "El parámetro de búsqueda es obligatorio" }),
@@ -28,7 +27,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Ejecutar la consulta para buscar series por título
+    // Ejecutar la consulta
     const result = await new Promise<unknown>((resolve, reject) => {
       const query = `
         SELECT 

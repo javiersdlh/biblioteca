@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getConnection } from '../../../../lib/duckdb'; // Asegúrate de que la ruta sea correcta
+import { getConnection } from '../../../../lib/duckdb';
 
 export async function POST(req: Request) {
     try {
@@ -20,13 +20,13 @@ export async function POST(req: Request) {
         // Obtener la conexión a DuckDB
         const db = getConnection();
 
-        // Crear la consulta SQL de inserción para la tabla "guardados"
+        // Crear la consulta SQL de inserción para la tabla guardados
         const query = `INSERT INTO guardados ("type", id, puntuacion) VALUES (?, ?, ?)`;
 
         // Preparar la consulta
         const stmt = db.prepare(query);
 
-        // Ejecutar la consulta con los parámetros correctos usando promesas
+        // Ejecutar la consulta
         await new Promise((resolve, reject) => {
             stmt.run(type, favorite_id, puntuacion, (err) => {
                 if (err) {

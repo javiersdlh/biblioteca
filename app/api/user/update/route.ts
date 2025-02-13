@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getConnection } from '../../../../lib/duckdb'; // Asegúrate de que la ruta sea correcta
+import { getConnection } from '../../../../lib/duckdb';
 
 export async function POST(req: Request) {
     try {
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
         const db = getConnection();
 
-        // Realizamos el UPDATE directamente sin comprobar si existe el registro
+        // Realizar el UPDATE
         const queryUpdate = `
             UPDATE guardados
             SET puntuacion = ?

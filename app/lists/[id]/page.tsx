@@ -39,12 +39,12 @@ interface List {
 }
 
 const ListPage = () => {
-    const { id } = useParams(); // Obtener el ID desde la URL
+    const { id } = useParams(); // Obtener el ID
     const [List, setList] = useState<List | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    const router = useRouter(); // Inicializa el router
+    const router = useRouter(); // Inicializar el router
 
     // Función para volver atrás y mantener los filtros
     const handleGoBack = () => {
@@ -80,7 +80,7 @@ const ListPage = () => {
 
     const handleAddToFavorites = async (id: number) => {
         try {
-            // Obtener los favoritos actuales del usuario
+            // Obtener los favoritos del usuario
             const response = await fetch('/api/user/obtain/todos');
             if (!response.ok) {
                 throw new Error(`Error al obtener los datos del usuario: ${response.statusText}`);
@@ -88,9 +88,9 @@ const ListPage = () => {
 
             const data = await response.json();
 
-            // Verificar si la respuesta contiene un array de guardados
+            // Verificar si la respuesta contiene un array
             if (Array.isArray(data.guardados)) {
-                // Filtrar los favoritos por tipo 'list'
+                // Filtrar los favoritos por tipo list
                 const filteredLists = data.guardados.filter((item: any) => item.type === 'list');
 
                 // Verificar si la lista ya está en los favoritos
@@ -139,7 +139,6 @@ const ListPage = () => {
         }
     };
 
-
     if (loading) {
         return <div className="text-center text-blue-600">Cargando detalles de la lista...</div>;
     }
@@ -165,8 +164,6 @@ const ListPage = () => {
             <div className="text-lg text-gray-600 mb-6">
                 <p>{List.description}</p>
             </div>
-
-
 
             <div className="mb-6">
                 <p className="text-lg text-gray-700"><strong>Fecha de creación:</strong> {List.created_date}</p>
@@ -195,17 +192,17 @@ const ListPage = () => {
             <div>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Libros</h2>
                 {List.books.length > 0 ? (
-                    <ul className="space-y-4">
+                    <section className="space-y-4">
                         {List.books.map((book, index) => (
-                            <li key={index} className="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <article key={index} className="p-4 bg-gray-100 rounded-lg shadow-sm">
                                 <h3 className="text-xl font-medium text-gray-800">{book.title}</h3>
                                 <p className="text-lg text-gray-600"><strong>Autor:</strong> {book.author}</p>
                                 <p className="text-lg text-gray-600"><strong>Ranking:</strong> {book.position.ranking}</p>
                                 <p className="text-lg text-gray-600"><strong>Puntaje:</strong> {book.position.score}</p>
                                 <p className="text-lg text-gray-600"><strong>Votos:</strong> {book.position.votes}</p>
-                            </li>
+                            </article>
                         ))}
-                    </ul>
+                    </section>
                 ) : (
                     <p className="text-center text-gray-600">No hay libros en esta lista.</p>
                 )}

@@ -242,7 +242,6 @@ const BooksList = () => {
       setBooks([selectedBook]);
     }
   }, [selectedBook]);
-  const [toastShown, setToastShown] = useState(false);
 
   const handleRatingChange = async (newRating: number, bookId: string, type: string) => {
     try {
@@ -303,7 +302,6 @@ const BooksList = () => {
     }
   };
 
-
   return (
     <div className="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-8 mb-4">
       {/* Filtros */}
@@ -348,7 +346,7 @@ const BooksList = () => {
                 <div {...props} className="h-2 bg-gray-300 rounded-full my-4">{children}</div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extraer la propiedad `key`
+                const { key, ...restProps } = props; // Extraer la propiedad key
                 return <div {...restProps} key={key} className="h-6 w-6 bg-blue-500 rounded-full" />;
               }}
             />
@@ -370,7 +368,7 @@ const BooksList = () => {
                 <div {...props} className="h-2 bg-gray-300 rounded-full my-4">{children}</div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extraer la propiedad `key`
+                const { key, ...restProps } = props; // Extraer la propiedad key
                 return <div {...restProps} key={key} className="h-6 w-6 bg-blue-500 rounded-full" />;
               }}
             />
@@ -392,7 +390,7 @@ const BooksList = () => {
                 <div {...props} className="h-2 bg-gray-300 rounded-full my-4">{children}</div>
               )}
               renderThumb={({ props }) => {
-                const { key, ...restProps } = props; // Extraer la propiedad `key`
+                const { key, ...restProps } = props; // Extraer la propiedad key
                 return <div {...restProps} key={key} className="h-6 w-6 bg-blue-500 rounded-full" />;
               }}
             />
@@ -464,7 +462,7 @@ const BooksList = () => {
                   {/* Title */}
                   <h3
                     className="text-lg font-semibold text-gray-800 text-center line-clamp-2 w-full h-[60px] mb-2 overflow-hidden"
-                    title={book.title} // Tooltip
+                    title={book.title}
                   >
                     {book.title}
                   </h3>

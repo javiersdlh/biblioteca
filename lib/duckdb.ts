@@ -1,7 +1,5 @@
-// archivo: ./lib/bibliotecaConnection.ts
 import duckdb from "duckdb";
 
-// Usa 'const' en lugar de 'let' para la variable global
 const globalForDuckDBLibrary = global as unknown as { conn: duckdb.Database | null };
 
 // Inicializa la conexión si no existe
